@@ -1,6 +1,10 @@
 package com.example.mainmenu;
 
+import android.app.Activity;
 import android.graphics.Rect;
+import android.view.WindowManager;
+
+import java.lang.ref.WeakReference;
 
 public class CollisionHandler {
 
@@ -8,7 +12,11 @@ public class CollisionHandler {
     private Rect obstacle; // Represents the obstacle's hitbox
     private boolean isPaused = false; // Flag to indicate whether collision detection is paused or not
 
+
+
     public CollisionHandler() {
+
+
         // Initialize hitboxes for the ImageView and the obstacle
         image1 = new Rect(0, 0, 0, 0); // Initialize with zero values
         obstacle = new Rect(460, 180, 680, 400);
@@ -40,6 +48,7 @@ public class CollisionHandler {
     public void handleCollision() {
         // Example action to handle collision (stop the obstacle)
         obstacle.offset(0, -10);
+
     }
 
     // Getters for the hitboxes

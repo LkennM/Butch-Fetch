@@ -8,7 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.GestureDetector;
@@ -17,7 +19,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,10 +40,11 @@ public class activity_start_game extends AppCompatActivity implements pause_dial
     private AnimationDrawable dogAnimation;
     private GestureDetector gestureDetector;
 
-    private ImageView imageView;
+    private ImageView imageView, imageViewObst;
     private SimulationView simulationView;
     private ObstacleRandomizer obstacleRandomizer;
     private SoundPlayer soundPlayer;
+    private Drawable coneObst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +114,7 @@ public class activity_start_game extends AppCompatActivity implements pause_dial
 
     private boolean startGame() {
         gestureDetector = new GestureDetector(this, new MyGestureListener());
-        collisionHandler = new CollisionHandler();
+        collisionHandler =  new CollisionHandler();
 
         setContentView(R.layout.activity_start_game);
         FrameLayout backgroundContainer = findViewById(R.id.backgroundContainer);
@@ -129,6 +131,10 @@ public class activity_start_game extends AppCompatActivity implements pause_dial
         imageView = findViewById(R.id.image);
         imageView.setBackgroundResource(R.drawable.animation);
         dogAnimation = (AnimationDrawable) imageView.getBackground();
+
+        imageViewObst = findViewById(R.id.image2);
+        imageViewObst.setBackgroundResource(R.drawable.c1);
+        coneObst = imageViewObst.getBackground();
 
         return isGameStarted = true;
     }
@@ -224,6 +230,13 @@ public class activity_start_game extends AppCompatActivity implements pause_dial
             paint.setColor(Color.BLUE);
             Rect obstacleRect = collisionHandler.getObstacle();
             canvas.drawRect(obstacleRect, paint);
+
+            RectF obstacleRectF = new RectF(obstacleRect);
+            coneObst.setBounds((int) obstacleRectF.left, (int) obstacleRectF.top,
+                    (int) obstacleRectF.right, (int) obstacleRectF.bottom);
+            coneObst.draw(canvas);
+
+
         }
     }
 

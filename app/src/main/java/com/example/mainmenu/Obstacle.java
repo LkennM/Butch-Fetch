@@ -1,6 +1,7 @@
 package com.example.mainmenu;
 
-public class Obstacle {
+
+public class Obstacle  {
     public enum Type {
         MANHOLE, CONE, TRASHCAN, FOG, TREATS, TRAFFIC_CONE
     }
